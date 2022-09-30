@@ -1,0 +1,111 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}Объекты{% endblock %}
+
+{% block content_main %}
+    <div class="features">
+        {% if main_objs|length == 0 and not search %}
+            <h1>Нет данных</h1>
+            <a href="{% url 'create_table' %}">
+                <button class="btn btn-success">Добавить данные</button>
+            </a>
+        {% elif main_objs|length == 0 and search %}
+            <h1>Данные, которые вы ищете, не существуют</h1>
+        {% else %}
+            <h1>Объекты города</h1>
+            <table class="center">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Тип</th>
+                    <th>Адресс</th>
+                    <th>Количество мест</th>
+                    <th>Владелец</th>
+                    <th>Сезонные даты <br>
+                        открытия и закрытия
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in main_objs %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.type_o }}</td>
+                        <td>{{ item.address }}</td>
+                        <td class="col_num">{{ item.num_seat }}</td>
+                        {% if item.id_owner == None %}
+                            <td>Нет</td>
+                        {% else %}
+                            <td>{{ item.id_owner }}</td>
+                        {% endif %}
+                        {% if item.season_date_open == None %}
+                            <td>Нет сезонных дат</td>
+                        {% else %}
+                            <td>{{ item.season_date_open }} <br> {{ item.season_date_close }}</td>
+                        {% endif %}
+                        <td>
+                            <ul class="list-inline m-0">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'create_table' %}">
+                                        <button class="btn btn-primary btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Add"><i class="bi bi-plus-square-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'object-update' item.id %}">
+                                        <button class="btn btn-success btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'object-delete' item.id %}">
+                                        <button class="btn btn-danger btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Delete"><i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block aside %}
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search_table' %}">
+        {% csrf_token %}
+        <h5>Поиск по дате и типу</h5>
+        <ul id="list" class="list-inline m-0">
+            <li class=list-inline-item"><input id="search" class="form-control mr-sm-2" name="q" type="date"
+                                               placeholder="Поиск по объектам" aria-label="Search">
+            </li>
+            <li class=list-inline-item">
+                <button id="search_button" class="btn btn-outline-success my-2 my-sm-0" type="submit"><i
+                        class="bi bi-search"></i></button>
+            </li>
+        </ul>
+        <label>
+            <input id="input_type" type="text" name="type_ob" list="cityname" placeholder="Введите тип объекта">
+        </label>
+        <datalist id="cityname">
+            {% for value in type_obj %}
+                <option>{{ value.type_o }}</option>
+            {% endfor %}
+        </datalist>
+{#                <label>#}
+{#                    <select name='type_ob'>#}
+{#                        <option selected>Open this select menu</option>#}
+{#                        {% for value in type_obj %}#}
+{#                        <option>{{ value.type_o }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </label>#}
+    </form>
+{% endblock %}
+

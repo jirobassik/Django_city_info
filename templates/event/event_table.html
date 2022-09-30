@@ -1,0 +1,84 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}Мероприятия{% endblock %}
+
+{% block content_main %}
+    <div class="features">
+        {% if event_objs|length == 0 and not search %}
+            <h1>Нет данных</h1>
+            <a href="{% url 'create_event' %}">
+                <button class="btn btn-success">Добавить данные</button>
+            </a>
+        {% elif event_objs|length == 0 and search %}
+            <h1>Нет мероприятий на ближайшие две недели</h1>
+        {% else %}
+            <h1>Мероприятия города</h1>
+            <table class="center">
+                <thead>
+                <tr>
+                    <th>Название объекта</th>
+                    <th>Название мероприятия</th>
+                    <th>Тип</th>
+                    <th>Дата</th>
+                    {% if search %}
+                        <th>Адресс</th>
+                    {% endif %}
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in event_objs %}
+                    <tr>
+                        <td>{{ item.id_object }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.kind }}</td>
+                        <td>{{ item.date }}</td>
+                        {% if search %}
+                            <td>{{ item.id_object.address }}</td>
+                        {% endif %}
+                        <td>
+                            <ul class="list-inline m-0">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'create_event' %}">
+                                        <button class="btn btn-primary btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Add"><i class="bi bi-plus-square-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'event-update' item.id %}">
+                                        <button class="btn btn-success btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'event-delete' item.id %}">
+                                        <button class="btn btn-danger btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Delete"><i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block aside %}
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search_event' %}">
+        {% csrf_token %}
+        <h5>Поиск мероприятий<br>на ближайшие 2 недели</h5>
+        <ul id="list" class="list-inline m-0">
+            <li class=list-inline-item">
+                <button id="search_button_date" class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    {{ today }} <br> {{ week_end }}</button>
+            </li>
+        </ul>
+    </form>
+{% endblock %}
+

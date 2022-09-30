@@ -1,0 +1,58 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}Популярность{% endblock %}
+
+{% block content_main %}
+    <div class="features">
+        {% if visit_objs|length == 0 %}
+            <h1>Нет данных</h1>
+            <a href="{% url 'create_visit' %}"> <button class="btn btn-success">Добавить данные</button> </a>
+        {% else %}
+            <h1>Популярность объекта</h1>
+            <table class="center">
+                <thead>
+                <tr>
+                    <th>Название объекта</th>
+                    <th>Дата</th>
+                    <th>Количество посетивших</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in visit_objs %}
+                    <tr>
+                        <td>{{ item.id_object }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.num_visit }}</td>
+                        <td>
+                            <ul class="list-inline m-0">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'create_visit' %}">
+                                    <button class="btn btn-primary btn-sm rounded-0" type="button"
+                                            data-placement="top" title="Add"><i class="bi bi-plus-square-fill"></i>
+                                    </button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'visit-update' item.id %}">
+                                    <button class="btn btn-success btn-sm rounded-0" type="button"
+                                            data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'visit-delete' item.id %}">
+                                        <button class="btn btn-danger btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Delete"><i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+

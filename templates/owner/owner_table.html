@@ -1,0 +1,64 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}Владельцы{% endblock %}
+
+{% block content_main %}
+    <div class="features">
+        {% if owner_objs|length == 0 %}
+            <h1>Нет данных</h1>
+            <a href="{% url 'create_owner' %}">
+                <button class="btn btn-success">Добавить данные</button>
+            </a>
+        {% else %}
+            <h1>Владельцы объектов</h1>
+            <table class="center">
+                <thead>
+                <tr>
+                    <th>Вид лица</th>
+                    <th>Имя</th>
+                    <th>ФИО руководителя</th>
+                    <th>Номер телефона</th>
+                    <th>День открытия</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in owner_objs %}
+                    <tr>
+                        <td>{{ item.face_view }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.full_name_head }}</td>
+                        <td>{{ item.contact_number }}</td>
+                        <td>{{ item.opening_date }}</td>
+                        <td>
+                            <ul class="list-inline m-0">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'create_owner' %}">
+                                    <button class="btn btn-primary btn-sm rounded-0" type="button"
+                                            data-placement="top" title="Add"><i class="bi bi-plus-square-fill"></i>
+                                    </button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'owner-update' item.id %}">
+                                    <button class="btn btn-success btn-sm rounded-0" type="button"
+                                            data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></button>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'owner-delete' item.id %}">
+                                        <button class="btn btn-danger btn-sm rounded-0" type="button"
+                                                data-placement="top" title="Delete"><i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+
