@@ -40,7 +40,8 @@ def search(request):
         elif searched != "" and type_obj != "":
             main_objs = ObjectModel.objects.filter(Q(type_o__contains=type_obj) &
                                                    Q(season_date_close__gte=searched,
-                                                     season_date_open__lte=searched) | Q(season_date_close__exact=None))
+                                                     season_date_open__lte=searched) | Q(type_o__contains=type_obj) & Q(
+                                                                                        season_date_close__exact=None))
             return render(request, 'object/object_table.html',
                           {'main_objs': main_objs, 'search': True, 'type_obj': type_object_filter})
         else:

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'owner',
     'event',
     'visit',
+    'greeting',
     'valid_func',
     'phonenumber_field',
     'django.contrib.admin',

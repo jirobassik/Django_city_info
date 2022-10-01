@@ -107,11 +107,11 @@ ul.errorlist li {
 
 .create_table form {
     margin-left: auto;
-    margin-right: auto;
+    margin-right: 460px;
     width: 400px;
 }
 
-.create_table input[type=text], input[type=number], input[type=submit] {
+.create_table input[type=text], input[type=tel], input[type=submit], input[type=number] {
     width: 100%;
     padding: 12px 17px;
     margin: 5px 0;
@@ -149,9 +149,10 @@ ul.errorlist li {
     font-weight: 600;
 }
 
+
 /*Input from object table*/
 
-.features .btn-success {
+.create_table .btn-success {
     background-color: #009879;
 }
 
@@ -166,7 +167,7 @@ table {
     border-collapse: collapse;
     margin: 5px 0;
     font-size: 0.9em;
-    min-width: 400px;
+    min-width: 500px;
     border-radius: 5px 5px 0 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
@@ -279,3 +280,20 @@ table tbody tr.active-row {
     width: 220px;
     height: 70px;
 }
+
+.features .button_greet button {
+    height: 250px;
+    width: 250px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.features .button_greet {
+    margin-top: 25px;
+}
+
+.features .button_greet a {
+    text-decoration: none;
+}
+
+

@@ -20,14 +20,12 @@
 <aside>
     <h1>Навигация</h1>
     <ul>
-        <li><a href="{% url 'tables' %}"><i class="bi bi-house-fill"></i>Главная</a></li>
+        <li><a href="{% url 'greeting' %}"><i class="bi bi-house-fill"></i>Главная</a></li>
+        <li><a href="{% url 'tables' %}"><i class="bi bi-archive-fill"></i>Объекты</a></li>
         <li><a href="{% url 'tables_owner' %}"><i class="bi bi-person-lines-fill"></i>Владельцы</a></li>
         <li><a href="{% url 'tables_event' %}"><i class="bi bi-calendar-event-fill"></i>Мероприятия</a></li>
         <li id="popularity"><a href="{% url 'tables_visit' %}"><i class="bi bi-star-fill"></i>Популярность объектов</a>
         </li>
-
-        {#        <li><a href="{% url 'create' %}">#}
-        {#            <button class="btn btn-info"><i class="bi bi-plus-circle"></i>Добавить запись</button></a></li>#}
     </ul>
     {% block aside %}
     {% endblock %}

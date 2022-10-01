@@ -19,7 +19,7 @@
                     <th>Название</th>
                     <th>Тип</th>
                     <th>Адресс</th>
-                    <th>Количество мест</th>
+                    <th style="overflow:hidden;max-width: 130px;">Количество мест</th>
                     <th>Владелец</th>
                     <th>Сезонные даты <br>
                         открытия и закрытия
@@ -31,9 +31,9 @@
                 {% for item in main_objs %}
                     <tr>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.type_o }}</td>
+                        <td style="overflow:hidden;max-width: 140px;">{{ item.type_o }}</td>
                         <td>{{ item.address }}</td>
-                        <td class="col_num">{{ item.num_seat }}</td>
+                        <td style="overflow:hidden;max-width: 20px;">{{ item.num_seat }}</td>
                         {% if item.id_owner == None %}
                             <td>Нет</td>
                         {% else %}

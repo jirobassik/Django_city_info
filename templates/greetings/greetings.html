@@ -1,0 +1,26 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content_main %}
+    <div class="features">
+        <h1>Информационная служба города Бобруйска <br> С помощью неё, вы поможете просмотреть: <br></h1>
+
+        <div class="button_greet">
+        <a href="{% url 'tables' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0">Объекты города</button>
+        </a>
+        <a href="{% url 'tables_owner' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0">Вледельца объекта</button>
+        </a>
+        <a href="{% url 'tables_event' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0">Мероприятия объектов</button>
+        </a>
+        <a href="{% url 'tables_visit' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0">Популярность объктов</button>
+        </a>
+    </div>
+    </div>
+{% endblock %}
+
+
