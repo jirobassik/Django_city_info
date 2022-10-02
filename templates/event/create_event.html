@@ -10,7 +10,7 @@
             {% for field in form %}
                 {{ field.label_tag }}  {{ field }} <span class="errorlist">{{ field.errors }}</span>
             {% endfor %}
-            <button class="btn btn-success" type="submit">Добавить мероприятие</button>
+            <button id="but_event" class="btn btn-success" type="submit">Добавить мероприятие</button>
         </form>
     </div>
 {% endblock %}

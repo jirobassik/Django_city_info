@@ -1,6 +1,8 @@
 from django import forms
-from tables.models import EventModel
+from tables.models import EventModel, ObjectModel
 from valid_func import valid_str
+from django.db.models import Q
+
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -30,11 +32,20 @@ class EventForm(forms.ModelForm):
     def clean(self):
         super(EventForm, self).clean()
 
+        id_object = self.cleaned_data.get('id_object')
         name = self.cleaned_data.get('name')
         kind = self.cleaned_data.get('kind')
+        date = self.cleaned_data.get('date')
 
-        # date = self.cleaned_data.get('address') Добавить валидацию, что дата, должна быть больше чем дата создания
-        # объкта и нельзя выставлять на промежуток закрытия
+        date_open = ObjectModel.objects.get(Q(name__contains=id_object)).season_date_open
+        date_close = ObjectModel.objects.get(Q(name__contains=id_object)).season_date_close
+
+        if not ObjectModel.objects.filter(Q(name__contains=id_object) &
+                                          Q(season_date_close__gte=date, season_date_open__lte=date)
+                                          | Q(name__contains=id_object) &
+                                          Q(season_date_close__exact=None, season_date_open__exact=None)):
+            self._errors['date'] = self.error_class([
+                f'Дата должна быть между промежутком {date_open} и {date_close}'])
 
         dict_valid = {"name": name, "kind": kind, }
 

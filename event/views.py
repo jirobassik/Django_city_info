@@ -28,7 +28,6 @@ def search_event_date(request):
         week_end = today_date + timedelta(days=14)
         event_objs = EventModel.objects.filter(Q(date__gte=today_date,
                                                  date__lt=week_end)).select_related("id_object")
-        print(event_objs)
         return render(request, 'event/event_table.html',
                       {'event_objs': event_objs, 'search': True, 'today': today_date, 'week_end': week_end, })
     else:

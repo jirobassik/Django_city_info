@@ -135,6 +135,10 @@ ul.errorlist li {
     margin-left: 120px;
 }
 
+.create_table #but_event {
+    margin-left: 100px;
+}
+
 .create_table select {
     width: 100%;
     padding: 1px 17px;
