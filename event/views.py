@@ -26,8 +26,11 @@ def search_event_date(request):
     if request.method == 'POST':
         today_date = date.today()
         week_end = today_date + timedelta(days=14)
-        event_objs = EventModel.objects.filter(Q(date__gte=today_date,
-                                                 date__lt=week_end)).select_related("id_object")
+        # event_objs = EventModel.objects.filter(Q(date__gte=today_date,
+        #                                          date__lt=week_end)).select_related("id_object")
+        event_objs = EventModel.objects.raw('select tables_eventmodel.*, t.address from tables_eventmodel '
+                                            'join tables_objectmodel t on t.id = tables_eventmodel.id_object_id '
+                                            'where tables_eventmodel.date between %s and %s', [today_date, week_end])
         return render(request, 'event/event_table.html',
                       {'event_objs': event_objs, 'search': True, 'today': today_date, 'week_end': week_end, })
     else:

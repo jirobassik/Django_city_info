@@ -60,6 +60,11 @@ class ObjectForm(forms.ModelForm):
             self._errors['season_date_open'] = self.error_class([
                 'Дата открытия должна быть меньше даты закрытия'])
 
+        if season_date_open is not None and season_date_close is None \
+                or season_date_open is None and season_date_close is not None:
+            self._errors['season_date_open'] = self.error_class([
+                'Обе даты должны быть заполнены'])
+
         return self.cleaned_data
 
     # def clean_name(self):
